@@ -5,7 +5,7 @@ import s from "./Menu.module.scss";
 export default function Menu({ menu, test }) {
   const renderMenu = menu.map((u) => {
     return (
-      <MenuItem test={test} key={u.id} name={u.name} price={u.price} calories={u.kkl} description={u.description}  status={u.status}/>
+      <MenuItem  test={test} key={u.id} name={u.name} price={u.price} calories={u.kkl} description={u.description}  status={u.status}/>
     );
   });
 

@@ -44,10 +44,20 @@ function App() {
         "Soft dairy ice cream, swirled with Cadbury Crunchie pieces and a honeycomb sauce.",
     },
   ]);
+  const [order, setOrder] = useState([]);
 
-  const test = () => {
-    console.log("test");
-    
+  const test = (name, price, calories, status, description) => {
+    const favorite = {
+      id: Math.random() * Math.ceil(10),
+      name: name,
+      price: price,
+      kkl: calories,
+      status: status,
+      description: description,
+    };
+    order.push(favorite);
+    setOrder([...order]);
+    console.log(order);
   };
 
   return (
@@ -56,7 +66,7 @@ function App() {
         <Header />
         <div className="panel">
           <Menu menu={menu} test={test} />
-          <Order test={test} />
+          <Order menu={menu} order={order} />
           <Edit menu={menu} setMenu={setMenu} />
         </div>
       </div>
