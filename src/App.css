@@ -1,18 +1,15 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 .App {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+.panel {
   display: grid;
-  grid-column-gap: 10px;
-  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1em;
+  grid-template-columns: repeat(3, 1fr);
 }
-.App div {
-  background-color:gray;
-  /* height: 100vh; */
-}
-.block {
-
-}
-
 
