@@ -12,7 +12,7 @@ function App() {
       name: "Double Big Mac®",
       price: 100,
       kkl: "2901 kJ | 694 kcal",
-      status: "no",
+      status: true,
       description:
         "Four 100% beef patties, a slice of cheese, lettuce, onion and pickles and the unbeatable, tasty Big Mac® sauce.",
     },
@@ -20,7 +20,7 @@ function App() {
       id: 2,
       name: "Salted Caramel Latte",
       price: 100,
-      status: "yes",
+      status: true,
       kkl: "691 kJ | 164 kcal",
       description:
         "A luxurious treat. Contains a large shot of espresso blended with steamed milk and salted caramel flavour syrup and topped with a swirl of cream and a sprinkle of caramel sugar dusting.",
@@ -30,7 +30,7 @@ function App() {
       name: "Nacho Cheese Wedges",
       price: 100,
       kkl: "895 kJ | 215 kcal",
-      status: "yes",
+      status: true,
       description:
         "Five Cheese Wedges filled with spicy Jalapeno slices, served with sour cream & chive dip",
     },
@@ -39,14 +39,26 @@ function App() {
       name: "Cadbury Crunchie McFlurry",
       price: 100,
       kkl: "1459 kJ | 347 kcal",
-      status: "yes",
+      status: false,
       description:
         "Soft dairy ice cream, swirled with Cadbury Crunchie pieces and a honeycomb sauce.",
     },
   ]);
   const [order, setOrder] = useState([]);
+  const [count, setCount] = useState(0);
 
-  const test = (name, price, calories, status, description) => {
+  const increment = () => {
+    setCount((count) => count + 1);
+  };
+  const decrement = () => {
+    setCount((count) => {
+      if (count <= 0) alert("smaller tnan 0");
+      if (count >= 1) return count - 1;
+      if (count === 0) return count;
+    });
+  };
+
+  const pickItem = (name, price, calories, status, description, count) => {
     const favorite = {
       id: Math.random() * Math.ceil(10),
       name: name,
@@ -54,7 +66,9 @@ function App() {
       kkl: calories,
       status: status,
       description: description,
+      amount: count,
     };
+    if (!status) return null
     order.push(favorite);
     setOrder([...order]);
     console.log(order);
@@ -65,8 +79,14 @@ function App() {
       <div className="App">
         <Header />
         <div className="panel">
-          <Menu menu={menu} test={test} />
-          <Order menu={menu} order={order} />
+          <Menu menu={menu} pickItem={pickItem} />
+          <Order
+            menu={menu}
+            order={order}
+            count={count}
+            // increment={increment}
+            // decrement={decrement}
+          />
           <Edit menu={menu} setMenu={setMenu} />
         </div>
       </div>
