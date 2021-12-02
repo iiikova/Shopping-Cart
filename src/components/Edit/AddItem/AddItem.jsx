@@ -2,6 +2,7 @@ import React from "react";
 import s from './AddItem.module.css'
 
 export const AddItem = ({menu, setMenu}) => {
+  
   const nameRef = React.createRef();
   const priceRef = React.createRef();
   const caloriesRef = React.createRef();
@@ -12,14 +13,14 @@ export const AddItem = ({menu, setMenu}) => {
     e.preventDefault();
     const randomNum = Math.random() * 10;
     const nameValue = nameRef.current.value
-    if(nameValue === '') return alert('please enter name')
+    // if(nameValue === '') return alert('please enter name')
 
     const item = {
       id: randomNum,
       name: nameValue,
-      price: priceRef.current.value,
-      calories: caloriesRef.current.value,
-      status: statusRef.current.value,
+      price: +priceRef.current.value,
+      calories: +caloriesRef.current.value,
+      status: Boolean(statusRef.current.value),
       description: descriptionRef.current.value,
     };
     setMenu([...menu, item])
@@ -51,8 +52,8 @@ export const AddItem = ({menu, setMenu}) => {
         autoComplete="off"
       />
       <select name="status" ref={statusRef}>
-        <option value="yes">yes</option>
-        <option value="no">no</option>
+        <option  value={true}>yes</option>
+        <option  value={false}>no</option>
       </select>
       <textarea
         name="description"

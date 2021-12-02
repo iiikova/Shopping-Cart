@@ -1,26 +1,12 @@
-import React, { useState } from "react";
-import MenuItem from "./Menu-item/MenuItem.jsx";
+import { Card } from "@mui/material";
+import React from "react";
 import s from "./Menu.module.scss";
+import MenuItem from "./Menu-item/MenuItem";
 
-export default function Menu({ menu, pickItem }) {
-  const renderMenu = menu.map((u) => {
-    return (
-      <MenuItem
-        pickItem={pickItem}
-        key={u.id}
-        name={u.name}
-        price={u.price}
-        calories={u.kkl}
-        description={u.description}
-        status={u.status}
-      />
-    );
-  });
-
+export default function Menu({ menu, onAdd, increment }) {
   return (
-    <div className={s.ss}>
-      <h1>Menu</h1>
-      <div>{renderMenu}</div>
-    </div>
+    <Card className={s.card}>
+      <MenuItem key={menu.id} menu={menu} increment={increment} onAdd={onAdd}></MenuItem>
+    </Card>
   );
 }

@@ -8,7 +8,7 @@ const NotFound = () => {
     return (
         <div>
             <h1>Not Found</h1>
-            <button onClick={()=> btnForward()}>forward</button>
+            <button onClick={()=> btnForward()}>Forward</button>
         </div>
     )
 }

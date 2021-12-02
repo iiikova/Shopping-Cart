@@ -3,93 +3,174 @@ import Header from "./components/Header/Header";
 import Menu from "./components/Menu/Menu";
 import Order from "./components/Order/Order";
 import Edit from "./components/Edit/Edit";
+
 import { useState } from "react";
+
+// redux
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+
+const initialState = [
+  {
+    id: 1,
+    name: "Onion",
+    price: 123,
+    status: true,
+    description:
+      "Four 100% beef patties, a slice of cheese, lettuce, onion and pickles and the unbeatable, tasty Big Mac® sauce.",
+    amount: 1,
+  },
+  {
+    id: 2,
+    name: "Tomato",
+    price: 43,
+    status: true,
+    description:
+      "A luxurious treat. Contains a large shot of espresso blended with steamed milk and salted caramel flavour syrup and topped with a swirl of cream and a sprinkle of caramel sugar dusting.",
+    amount: 1,
+  },
+  {
+    id: 3,
+    name: "Potato",
+    price: 65,
+    status: true,
+    description:
+      "Five Cheese Wedges filled with spicy Jalapeno slices, served with sour cream & chive dip",
+    amount: 1,
+  },
+  {
+    id: 4,
+    name: "Cucumber",
+    price: 23,
+    status: false,
+    description:
+      "Soft dairy ice cream, swirled with Cadbury Crunchie pieces and a honeycomb sauce.",
+    amount: 1,
+  },
+];
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "ADD":
+      return { ...state, name: action.payload };
+    default:
+      return state;
+  }
+};
+
+const store = createStore(reducer);
+
+const addName = {
+  type: "ADD",
+  payload: "ADD",
+};
 
 function App() {
   const [menu, setMenu] = useState([
     {
       id: 1,
-      name: "Double Big Mac®",
-      price: 100,
-      kkl: "2901 kJ | 694 kcal",
+      name: "Onion",
+      price: 123,
       status: true,
       description:
         "Four 100% beef patties, a slice of cheese, lettuce, onion and pickles and the unbeatable, tasty Big Mac® sauce.",
+      amount: 1,
     },
     {
       id: 2,
-      name: "Salted Caramel Latte",
-      price: 100,
+      name: "Tomato",
+      price: 43,
       status: true,
-      kkl: "691 kJ | 164 kcal",
       description:
         "A luxurious treat. Contains a large shot of espresso blended with steamed milk and salted caramel flavour syrup and topped with a swirl of cream and a sprinkle of caramel sugar dusting.",
+      amount: 1,
     },
     {
       id: 3,
-      name: "Nacho Cheese Wedges",
-      price: 100,
-      kkl: "895 kJ | 215 kcal",
+      name: "Potato",
+      price: 65,
       status: true,
       description:
         "Five Cheese Wedges filled with spicy Jalapeno slices, served with sour cream & chive dip",
+      amount: 1,
     },
     {
       id: 4,
-      name: "Cadbury Crunchie McFlurry",
-      price: 100,
-      kkl: "1459 kJ | 347 kcal",
+      name: "Cucumber",
+      price: 23,
       status: false,
       description:
         "Soft dairy ice cream, swirled with Cadbury Crunchie pieces and a honeycomb sauce.",
+      amount: 1,
     },
   ]);
   const [order, setOrder] = useState([]);
-  const [count, setCount] = useState(0);
 
-  const increment = () => {
-    setCount((count) => count + 1);
-  };
-  const decrement = () => {
-    setCount((count) => {
-      if (count <= 0) alert("smaller tnan 0");
-      if (count >= 1) return count - 1;
-      if (count === 0) return count;
-    });
+  const removeItem = (id) => {
+    const dele = order.filter((name) => name.id !== id);
+    setOrder(dele);
+    console.log("delete", dele);
   };
 
-  const pickItem = (name, price, calories, status, description, count) => {
-    const favorite = {
+  const addOrder = (name, price, calories, status, description, amount) => {
+    const newItem = {
       id: Math.random() * Math.ceil(10),
       name: name,
       price: price,
-      kkl: calories,
+      calories: calories,
       status: status,
+      amount: amount,
       description: description,
-      amount: count,
     };
-    if (!status) return null
-    order.push(favorite);
+    order.push(newItem);
     setOrder([...order]);
     console.log(order);
   };
 
+  const onAdd = (product) => {
+    const exist = order.find((x) => x.id === product.id);
+    if (exist) {
+      setOrder(
+        order.map((x) =>
+          x.id === product.id ? { ...exist, amount: exist.amount + 1 } : x
+        )
+      );
+    } else {
+      setOrder([...order, { ...product, amount: 1 }]);
+    }
+  };
+
+  const onRemove = (product) => {
+    const exist = order.find((x) => x.id === product.id);
+    if (exist.amount === 1) {
+      setOrder(order.filter((f) => f.id !== product.id));
+    } else {
+      setOrder(
+        order.map((x) =>
+          x.id === product.id ? { ...exist, amount: exist.amount - 1 } : x
+        )
+      );
+    }
+  };
+
+  console.log(store.getState());
+
+store.dispatch(addName)
+
+console.log(store.getState());
+
   return (
     <>
-      <div className="App">
-        <Header />
-        <div className="panel">
-          <Menu menu={menu} pickItem={pickItem} />
-          <Order
-            menu={menu}
-            order={order}
-            count={count}
-            // increment={increment}
-            // decrement={decrement}
-          />
-          <Edit menu={menu} setMenu={setMenu} />
+      <Provider store={store}>
+        <div className="App">
+          <Header  />
+          <div className="panel">
+            <Menu menu={menu} onAdd={onAdd} removeItem={removeItem} />
+            <Order order={order} onAdd={onAdd} onRemove={onRemove} />
+            {/* <Edit menu={menu} setMenu={setMenu} /> */}
+          </div>
         </div>
-      </div>
+      </Provider>
     </>
   );
 }
