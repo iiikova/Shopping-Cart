@@ -2,68 +2,8 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import Menu from "./components/Menu/Menu";
 import Order from "./components/Order/Order";
-import Edit from "./components/Edit/Edit";
 
 import { useState } from "react";
-
-// redux
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-
-const initialState = [
-  {
-    id: 1,
-    name: "Onion",
-    price: 123,
-    status: true,
-    description:
-      "Four 100% beef patties, a slice of cheese, lettuce, onion and pickles and the unbeatable, tasty Big Mac® sauce.",
-    amount: 1,
-  },
-  {
-    id: 2,
-    name: "Tomato",
-    price: 43,
-    status: true,
-    description:
-      "A luxurious treat. Contains a large shot of espresso blended with steamed milk and salted caramel flavour syrup and topped with a swirl of cream and a sprinkle of caramel sugar dusting.",
-    amount: 1,
-  },
-  {
-    id: 3,
-    name: "Potato",
-    price: 65,
-    status: true,
-    description:
-      "Five Cheese Wedges filled with spicy Jalapeno slices, served with sour cream & chive dip",
-    amount: 1,
-  },
-  {
-    id: 4,
-    name: "Cucumber",
-    price: 23,
-    status: false,
-    description:
-      "Soft dairy ice cream, swirled with Cadbury Crunchie pieces and a honeycomb sauce.",
-    amount: 1,
-  },
-];
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "ADD":
-      return { ...state, name: action.payload };
-    default:
-      return state;
-  }
-};
-
-const store = createStore(reducer);
-
-const addName = {
-  type: "ADD",
-  payload: "ADD",
-};
 
 function App() {
   const [menu, setMenu] = useState([
@@ -153,24 +93,16 @@ function App() {
     }
   };
 
-  console.log(store.getState());
-
-store.dispatch(addName)
-
-console.log(store.getState());
-
   return (
     <>
-      <Provider store={store}>
         <div className="App">
-          <Header  />
+          <Header />
           <div className="panel">
             <Menu menu={menu} onAdd={onAdd} removeItem={removeItem} />
             <Order order={order} onAdd={onAdd} onRemove={onRemove} />
             {/* <Edit menu={menu} setMenu={setMenu} /> */}
           </div>
         </div>
-      </Provider>
     </>
   );
 }

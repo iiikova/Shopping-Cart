@@ -1,4 +1,4 @@
-import { Button, Typography, Box, Card} from "@mui/material";
+import { Button, Typography, Box, Card } from "@mui/material";
 import s from "./Order.module.scss";
 
 export default function Order({ order, onAdd, onRemove }) {
@@ -33,7 +33,7 @@ export default function Order({ order, onAdd, onRemove }) {
     );
   });
   return (
-    <Card className={s.order}>
+    <Card>
       <h1 style={{ textAlign: "center" }}>Order</h1>
       <div>
         {orderMenu.length === 0 ? (
