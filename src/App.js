@@ -4,52 +4,47 @@ import Menu from "./components/Menu/Menu";
 import Order from "./components/Order/Order";
 
 import { useState } from "react";
+import CustomizedBadges from "./components/CustomizedBadges/CustomizedBadges";
 
 function App() {
   const [menu, setMenu] = useState([
     {
       id: 1,
+      img: "https://cdn.theatlantic.com/thumbor/woR9UVVtFp9f5yl9Xul4HxQ4Hd4=/0x72:1000x635/960x540/media/img/mt/2015/05/shutterstock_247399801/original.jpg",
       name: "Onion",
-      price: 123,
+      price: 10,
       status: true,
-      description:
-        "Four 100% beef patties, a slice of cheese, lettuce, onion and pickles and the unbeatable, tasty Big Mac® sauce.",
       amount: 1,
     },
     {
       id: 2,
       name: "Tomato",
-      price: 43,
+      img: "https://post.healthline.com/wp-content/uploads/2020/09/tomatoes-1200x628-facebook-1200x628.jpg",
+      price: 7,
       status: true,
-      description:
-        "A luxurious treat. Contains a large shot of espresso blended with steamed milk and salted caramel flavour syrup and topped with a swirl of cream and a sprinkle of caramel sugar dusting.",
       amount: 1,
     },
     {
       id: 3,
       name: "Potato",
-      price: 65,
+      img: "https://cdn.potatopro.com/cdn/ff/q6FzvuUKUtfesLdr3ptr_P1-OocXa1Syw4T-tmcF6Hk/1629293807/public/styles/1200_wide/public/field/image/azerbaijan-potato-varieties-1200.jpg?itok=reNjDgCn",
+      price: 2,
       status: true,
-      description:
-        "Five Cheese Wedges filled with spicy Jalapeno slices, served with sour cream & chive dip",
       amount: 1,
     },
     {
       id: 4,
       name: "Cucumber",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR09QB1Y29ilDo9Oo43h6ZJaXHhQRnPAjOlTA&usqp=CAU",
       price: 23,
       status: false,
-      description:
-        "Soft dairy ice cream, swirled with Cadbury Crunchie pieces and a honeycomb sauce.",
       amount: 1,
     },
   ]);
   const [order, setOrder] = useState([]);
 
-  const removeItem = (id) => {
-    const dele = order.filter((name) => name.id !== id);
-    setOrder(dele);
-    console.log("delete", dele);
+  const onDelete = (product) => {
+    setOrder(order.filter((f) => f.id !== product.id));
   };
 
   const addOrder = (name, price, calories, status, description, amount) => {
@@ -95,14 +90,24 @@ function App() {
 
   return (
     <>
-        <div className="App">
-          <Header />
-          <div className="panel">
-            <Menu menu={menu} onAdd={onAdd} removeItem={removeItem} />
-            <Order order={order} onAdd={onAdd} onRemove={onRemove} />
-            {/* <Edit menu={menu} setMenu={setMenu} /> */}
-          </div>
+      <div className="App">
+        <Header
+          order={order}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
+        />
+        <div className="panel">
+          <Menu menu={menu} onAdd={onAdd} />
+          <Order
+            className="order"
+            order={order}
+            onAdd={onAdd}
+            onRemove={onRemove}
+            onDelete={onDelete}
+          />
         </div>
+      </div>
     </>
   );
 }

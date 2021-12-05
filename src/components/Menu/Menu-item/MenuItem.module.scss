@@ -1,11 +1,18 @@
 .card {
-  margin: 10px;
-  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .wrap {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  gap: .7em;
+  grid-template-columns: 1fr 1fr;
+
+}
+@media screen and (max-width: 575px) {
+  .wrap {
+    grid-template-columns: 1fr 1fr;
+  margin: 5px;
+
+  }
 }

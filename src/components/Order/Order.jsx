@@ -1,40 +1,75 @@
 import { Button, Typography, Box, Card } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import s from "./Order.module.scss";
 
-export default function Order({ order, onAdd, onRemove }) {
+export default function Order({ order, onAdd, onRemove, onDelete }) {
   const itemsPrice = order.reduce((a, b) => a + b.price * b.amount, 0);
   const orderMenu = order.map((m) => {
     return (
-      <div key={m.id} className={s.card} sx={{ maxWidth: 345 }}>
-        <Typography variant="h4">{m.name}</Typography>
-        <Typography variant="h5" color="text.secondary">
-          {m.amount} x ${m.amount * m.price}
-        </Typography>
-        <Box>
-          <Button
-            style={{ marginRight: "5px" }}
-            variant="contained"
-            size="small"
-            color="primary"
-            onClick={() => onAdd(m)}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "5px",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <img
+              src={m.img}
+              style={{ height: "50px", width: "50px", objectFit: "cover" }}
+              alt="img"
+            />
+          </div>
+
+          <div style={{ marginLeft: "10px" }}>
+            <p>
+              <strong>{m.name}</strong>
+            </p>
+            <p>
+              Price: {m.price} x {m.amount}
+            </p>
+          </div>
+        </div>
+
+        <div style={{ display: "flex" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+            }}
           >
-            +
-          </Button>
-          <Button
-            variant="contained"
-            size="small"
-            color="secondary"
-            onClick={() => onRemove(m)}
+            <IconButton aria-label="add" size="small">
+              <AddIcon fontSize="inherit" onClick={() => onAdd(m)} />
+            </IconButton>
+            <IconButton aria-label="remove" size="small">
+              <RemoveIcon fontSize="inherit" onClick={() => onRemove(m)} />
+            </IconButton>
+          </div>
+
+          <div
+          style={{
+              display: "flex",
+              justifyContent: "center",
+              marginLeft: '10px'
+            }}
           >
-            -
-          </Button>
-        </Box>
+            <IconButton aria-label="delete" size="small">
+              <DeleteIcon fontSize="inherit" onClick={() => onDelete(m)} />
+            </IconButton>
+          </div>
+        </div>
       </div>
     );
   });
+
   return (
-    <Card>
-      <h1 style={{ textAlign: "center" }}>Order</h1>
+    <Card className={s.order}>
       <div>
         {orderMenu.length === 0 ? (
           <Box sx={{ p: 2 }}>
@@ -48,8 +83,16 @@ export default function Order({ order, onAdd, onRemove }) {
         <hr />
         <Box sx={{ p: 2 }}>
           <Typography variant="h5" color="text.secondary">
-            Total: {itemsPrice}
+            Total Price: {itemsPrice}
           </Typography>
+          <Button
+            style={{ width: "100%", marginTop: "20px" }}
+            variant="contained"
+            size="small"
+            color="success"
+          >
+            Payment
+          </Button>
         </Box>
       </div>
     </Card>

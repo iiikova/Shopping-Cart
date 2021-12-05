@@ -7,21 +7,17 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import React from "react";
 import s from "./MenuItem.module.scss";
 
-const MenuItem = ({ menu, onAdd, increment }) => {
+const MenuItem = ({ menu, onAdd }) => {
   const renMenu = menu.map((v, i) => {
     return (
-      <Card
-        key={v.id}
-        className={s.card}
-        sx={{ maxWidth: 345, minHeight: 300 }}
-      >
+      <Card key={v.id} className={s.card} >
         <CardActionArea>
-          {/* <CardMedia
+          <CardMedia
             component="img"
             height="140"
-            image="/static/images/cards/contemplative-reptile.jpg"
+            image={v.img}
             alt="green iguana"
-          /> */}
+          />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {v.name}
@@ -33,7 +29,7 @@ const MenuItem = ({ menu, onAdd, increment }) => {
         </CardActionArea>
         <div style={{ marginLeft: "10px" }}>
           <Typography
-            style={{ marginTop: "30px", marginLeft: "8px" }}
+            style={{ marginLeft: "8px" }}
             component="h2"
             variant="h2"
             variant="body3"
@@ -43,7 +39,7 @@ const MenuItem = ({ menu, onAdd, increment }) => {
           </Typography>
           <CardActions>
             <Button size="small" variant="contained" onClick={() => onAdd(v)}>
-              Add
+              Add to order
             </Button>
           </CardActions>
         </div>
