@@ -62,7 +62,7 @@ export default function CustomizedBadges({ order, onAdd, onRemove, onDelete }) {
               <strong>{m.name}</strong>
             </p>
             <p>
-              Price: {m.price} x {m.amount}
+              Price: {m.amount} x {m.price}
             </p>
           </div>
         </div>

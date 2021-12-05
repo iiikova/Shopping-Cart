@@ -16,7 +16,7 @@ const MenuItem = ({ menu, onAdd }) => {
             component="img"
             height="140"
             image={v.img}
-            alt="green iguana"
+            alt="tomato"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
