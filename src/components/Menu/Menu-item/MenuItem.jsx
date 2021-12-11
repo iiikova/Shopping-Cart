@@ -7,7 +7,7 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import React from "react";
 import s from "./MenuItem.module.scss";
 
-const MenuItem = ({ menu, onAdd }) => {
+const MenuItem = ({ menu, onAdd }, props) => {
   const renMenu = menu.map((v, i) => {
     return (
       <Card key={v.id} className={s.card} >
@@ -47,7 +47,9 @@ const MenuItem = ({ menu, onAdd }) => {
     );
   });
 
-  return <div className={s.wrap}>{renMenu}</div>;
+  return <div className={s.wrap}>{renMenu}
+  <div>{props.name}</div>
+  </div>;
 };
 
-export default MenuItem;
+export default MenuItem ;

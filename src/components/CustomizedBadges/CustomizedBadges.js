@@ -7,7 +7,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import s from "./CustomizeBadges.scss";
 import Order from "../Order/Order";
 
-import { Button, Box, Card, Typography, Modal } from "@mui/material";
+import { Button, Box, Typography, Modal } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -137,7 +137,7 @@ export default function CustomizedBadges({ order, onAdd, onRemove, onDelete }) {
           ) : (
             <Box sx={style}>
               <Typography id="modal-modal-title" variant="h5" component="h2">
-               Please order...
+                Please order...
               </Typography>
             </Box>
           )}

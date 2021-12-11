@@ -4,10 +4,9 @@ import Menu from "./components/Menu/Menu";
 import Order from "./components/Order/Order";
 
 import { useState } from "react";
-import CustomizedBadges from "./components/CustomizedBadges/CustomizedBadges";
 
 function App() {
-  const [menu, setMenu] = useState([
+  const [menu] = useState([
     {
       id: 1,
       img: "https://cdn.theatlantic.com/thumbor/woR9UVVtFp9f5yl9Xul4HxQ4Hd4=/0x72:1000x635/960x540/media/img/mt/2015/05/shutterstock_247399801/original.jpg",
@@ -47,21 +46,6 @@ function App() {
     setOrder(order.filter((f) => f.id !== product.id));
   };
 
-  const addOrder = (name, price, calories, status, description, amount) => {
-    const newItem = {
-      id: Math.random() * Math.ceil(10),
-      name: name,
-      price: price,
-      calories: calories,
-      status: status,
-      amount: amount,
-      description: description,
-    };
-    order.push(newItem);
-    setOrder([...order]);
-    console.log(order);
-  };
-
   const onAdd = (product) => {
     const exist = order.find((x) => x.id === product.id);
     if (exist) {
@@ -90,24 +74,24 @@ function App() {
 
   return (
     <>
-      <div className="App">
-        <Header
-          order={order}
-          onAdd={onAdd}
-          onRemove={onRemove}
-          onDelete={onDelete}
-        />
-        <div className="panel">
-          <Menu menu={menu} onAdd={onAdd} />
-          <Order
-            className="order"
+        <div className="App">
+          <Header
             order={order}
             onAdd={onAdd}
             onRemove={onRemove}
             onDelete={onDelete}
           />
+          <div className="panel">
+            <Menu menu={menu} onAdd={onAdd} />
+            <Order
+              className="order"
+              order={order}
+              onAdd={onAdd}
+              onRemove={onRemove}
+              onDelete={onDelete}
+            />
+          </div>
         </div>
-      </div>
     </>
   );
 }
